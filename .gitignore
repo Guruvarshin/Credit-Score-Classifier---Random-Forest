@@ -1,0 +1,4 @@
+model/credit_score_classification_model.pickle 
+__pycache__/ 
+.env 
+server/artifacts/credit_score_classification_model.pickle

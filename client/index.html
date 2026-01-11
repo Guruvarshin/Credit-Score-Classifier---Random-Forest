@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreditSense | AI Financial Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020617; color: #f8fafc; }
+        .glass-card { background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; }
+        .input-box { background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 12px; width: 100%; transition: all 0.3s ease; }
+        .input-box:focus { border-color: #38bdf8; box-shadow: 0 0 20px rgba(56, 189, 248, 0.15); outline: none; }
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .prediction-hero { background: radial-gradient(circle at top right, #1e293b, #020617); }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <div class="lg:col-span-8 glass-card p-8 shadow-2xl">
+            <header class="mb-8">
+                <h1 class="text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600">CreditSense AI</h1>
+                <p class="text-slate-400 mt-2">Professional Credit Risk Classification Engine</p>
+            </header>
+
+            <form id="scoreForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-sky-500 mb-2">Primary Vitals</h2>
+                    <div><label class="block text-xs font-semibold text-slate-500 mb-1">Age</label><input type="number" id="Age" value="25" class="input-box"></div>
+                    <div><label class="block text-xs font-semibold text-slate-500 mb-1">Annual Income ($)</label><input type="number" id="Annual_Income" value="50000" class="input-box"></div>
+                    <div><label class="block text-xs font-semibold text-slate-500 mb-1">Monthly Base Salary</label><input type="number" id="Monthly_Inhand_Salary" value="4000" class="input-box"></div>
+                    <div><label class="block text-xs font-semibold text-slate-500 mb-1">Bank Accounts</label><input type="number" id="Num_Bank_Accounts" value="3" class="input-box"></div>
+                    <div><label class="block text-xs font-semibold text-slate-500 mb-1">Active Credit Cards</label><input type="number" id="Num_Credit_Card" value="4" class="input-box"></div>
+                    <div><label class="block text-xs font-semibold text-slate-500 mb-1">Current Interest Rate</label><input type="number" id="Interest_Rate" value="10" class="input-box"></div>
+                </div>
+
+                <div class="space-y-4">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-indigo-500 mb-2">Credit Behavior</h2>
+                    <div><label class="block text-xs font-semibold text-slate-500 mb-1">Days Past Due (Avg)</label><input type="number" id="Delay_from_due_date" value="2" class="input-box"></div>
+                    <div><label class="block text-xs font-semibold text-slate-500 mb-1">Delayed Payment Count</label><input type="number" id="Num_of_Delayed_Payment" value="1" class="input-box"></div>
+                    <div><label class="block text-xs font-semibold text-slate-500 mb-1">Credit Limit Change %</label><input type="number" id="Changed_Credit_Limit" value="10" class="input-box"></div>
+                    <div><label class="block text-xs font-semibold text-slate-500 mb-1">Credit Inquiries</label><input type="number" id="Num_Credit_Inquiries" value="2" class="input-box"></div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1">Credit Mix Quality</label>
+                        <select id="Credit_Mix" class="input-box">
+                            <option value="0">Bad</option><option value="1">Standard</option><option value="2" selected>Good</option>
+                        </select>
+                    </div>
+                    <div><label class="block text-xs font-semibold text-slate-500 mb-1">Outstanding Debt ($)</label><input type="number" id="Outstanding_Debt" value="500" class="input-box"></div>
+                </div>
+
+                <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-800">
+                    <div><label class="block text-xs font-semibold text-slate-500 mb-1">Credit History (Days)</label><input type="number" id="Credit_History_Age" value="3000" class="input-box"></div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1">Minimum Payment Preference</label>
+                        <select id="Payment_of_Min_Amount" class="input-box">
+                            <option value="0" selected>Paid Full (No)</option><option value="1">Min Only (Yes)</option>
+                        </select>
+                    </div>
+                    <div><label class="block text-xs font-semibold text-slate-500 mb-1">Monthly Investment</label><input type="number" id="Amount_invested_monthly" value="200" class="input-box"></div>
+                    <div><label class="block text-xs font-semibold text-slate-500 mb-1">Monthly Balance</label><input type="number" id="Monthly_Balance" value="1000" class="input-box"></div>
+                </div>
+
+                <button type="button" onclick="predictScore()" class="md:col-span-2 bg-gradient-to-r from-sky-500 to-indigo-600 hover:opacity-90 py-5 rounded-2xl font-extrabold text-white text-lg tracking-wide transition-all shadow-xl shadow-sky-500/10 active:scale-[0.98]">
+                    CALCULATE RISK SCORE
+                </button>
+            </form>
+        </div>
+
+        <div class="lg:col-span-4 flex flex-col gap-8">
+            <div class="glass-card prediction-hero p-8 text-center flex flex-col items-center justify-center">
+                <div class="mb-6 bg-white/5 p-4 rounded-2xl inline-block border border-white/10">
+                    <img src="image/Cibil-Score.jpg" alt="Credit Score Indicator" class="w-48 h-auto rounded-lg">
+                </div>
+                <h3 class="text-slate-400 text-sm font-semibold uppercase tracking-widest mb-2">Analysis Result</h3>
+                <div id="resultText" class="text-6xl font-black text-slate-800 tracking-tighter transition-all duration-500">----</div>
+                <div id="badge" class="mt-4 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest bg-slate-900 text-slate-500 border border-slate-700">Awaiting Signal</div>
+            </div>
+
+            <div class="glass-card p-6 flex-1 flex flex-col">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="p-2 bg-sky-500/10 rounded-lg"><svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                    <h3 class="font-bold text-slate-200">Data Dictionary</h3>
+                </div>
+                <div id="descriptionList" class="custom-scroll text-[11px] space-y-4 overflow-y-auto pr-2 text-slate-400 leading-relaxed max-h-[400px]">
+                    Fetching model metadata...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
